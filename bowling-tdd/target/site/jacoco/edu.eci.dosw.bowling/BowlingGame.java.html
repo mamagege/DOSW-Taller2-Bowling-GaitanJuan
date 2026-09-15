@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BowlingGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bowling-tdd</a> &gt; <a href="index.source.html" class="el_package">edu.eci.dosw.bowling</a> &gt; <span class="el_source">BowlingGame.java</span></div><h1>BowlingGame.java</h1><pre class="source lang-java linenums">package edu.eci.dosw.bowling;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Motor de un juego de Bowling para un jugador.
+ * Un juego tiene exactamente 10 frames.
+ */
+public class BowlingGame {
+
+    private final List&lt;Frame&gt; frames;
+    private int currentFrame;
+
+<span class="nc" id="L15">    public BowlingGame() {</span>
+<span class="nc" id="L16">        this.frames = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L17">        this.currentFrame = 0;</span>
+<span class="nc" id="L18">    }</span>
+
+    /**
+     * Registra pinos derribados. Lanza IllegalArgumentException si pines &lt; 0 o &gt;
+     * 10.
+     * Lanza IllegalStateException si el juego ya termino.
+     */
+    public void roll(int pins) {
+        // TODO: implementar con TDD (RED -&gt; GREEN -&gt; REFACTOR)
+<span class="nc" id="L27">    }</span>
+
+    /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
+    public int score() {
+        // TODO: implementar con TDD
+<span class="nc" id="L32">        return 0;</span>
+    }
+
+    /** true cuando los 10 frames han sido completados. */
+    public boolean isComplete() {
+        // TODO: implementar con TDD
+<span class="nc" id="L38">        return false;</span>
+    }
+
+    public List&lt;Frame&gt; getFrames() {
+<span class="nc" id="L42">        return List.copyOf(frames);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
