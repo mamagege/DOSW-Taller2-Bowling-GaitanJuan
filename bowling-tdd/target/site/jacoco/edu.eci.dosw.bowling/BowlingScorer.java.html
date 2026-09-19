@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BowlingScorer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bowling-tdd</a> &gt; <a href="index.source.html" class="el_package">edu.eci.dosw.bowling</a> &gt; <span class="el_source">BowlingScorer.java</span></div><h1>BowlingScorer.java</h1><pre class="source lang-java linenums">package edu.eci.dosw.bowling;
 
-<span class="nc" id="L3">public class BowlingScorer {</span>
+import java.util.List;
+
+<span class="fc" id="L5">public class BowlingScorer {</span>
+    public int calculate(List&lt;Frame&gt; frames) {
+<span class="fc" id="L7">        int score = 0;</span>
+<span class="fc bfc" id="L8" title="All 2 branches covered.">        for (int i = 0; i &lt; 10; i++) {</span>
+<span class="fc" id="L9">            Frame f = frames.get(i);</span>
+<span class="fc bfc" id="L10" title="All 2 branches covered.">            if (i == 9) {</span>
+<span class="fc" id="L11">                score += f.getFirstShot() + f.getSecondShot();</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">                if (f.getThirdShot() != -1) {</span>
+<span class="fc" id="L13">                    score += f.getThirdShot();</span>
+                }
+<span class="fc bfc" id="L15" title="All 2 branches covered.">            } else if (f.getType() == FrameType.STRIKE) {</span>
+<span class="fc" id="L16">                score += 10 + strikeBonus(frames, i);</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">            } else if (f.getType() == FrameType.SPARE) {</span>
+<span class="fc" id="L18">                score += 10 + spareBonus(frames, i);</span>
+            } else {
+<span class="fc" id="L20">                score += f.getFirstShot() + f.getSecondShot();</span>
+            }
+        }
+<span class="fc" id="L23">        return score;</span>
+    }
+
+    private int strikeBonus(List&lt;Frame&gt; frames, int i) {
+<span class="fc" id="L27">        Frame next = frames.get(i + 1);</span>
+<span class="fc bfc" id="L28" title="All 4 branches covered.">        if (next.getType() == FrameType.STRIKE &amp;&amp; i + 1 &lt; 9) {</span>
+<span class="fc" id="L29">            Frame nextNext = frames.get(i + 2);</span>
+<span class="fc" id="L30">            return 10 + nextNext.getFirstShot();</span>
+        } else {
+<span class="fc" id="L32">            return next.getFirstShot() + next.getSecondShot();</span>
+        }
+    }
+
+    private int spareBonus(List&lt;Frame&gt; frames, int i) {
+<span class="fc" id="L37">        return frames.get(i + 1).getFirstShot();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

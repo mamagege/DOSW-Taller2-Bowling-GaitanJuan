@@ -4,10 +4,11 @@ public class Frame {
     private FrameType type;
     private int firstShot = -1;
     private int secondShot = -1;
+    private int thirdShot = -1;
 
     public Frame(FrameType type) {
         this.type = type;
-        
+
     }
 
     public int getScore() {
@@ -34,5 +35,12 @@ public class Frame {
         return secondShot;
     }
 
-    
+    public void setThirdShot(int thirdShot) {
+        this.thirdShot = thirdShot;
+    }
+
+    public int getThirdShot() {
+        return thirdShot;
+    }
+
 }

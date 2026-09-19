@@ -10,12 +10,11 @@ import java.util.List;
 public class BowlingGame {
 
     private final List&lt;Frame&gt; frames;
-    private int currentFrame;
+    private Frame currentFrameObj;
 
-<span class="nc" id="L15">    public BowlingGame() {</span>
-<span class="nc" id="L16">        this.frames = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L17">        this.currentFrame = 0;</span>
-<span class="nc" id="L18">    }</span>
+<span class="fc" id="L15">    public BowlingGame() {</span>
+<span class="fc" id="L16">        this.frames = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L17">    }</span>
 
     /**
      * Registra pinos derribados. Lanza IllegalArgumentException si pines &lt; 0 o &gt;
@@ -23,23 +22,110 @@ public class BowlingGame {
      * Lanza IllegalStateException si el juego ya termino.
      */
     public void roll(int pins) {
-        // TODO: implementar con TDD (RED -&gt; GREEN -&gt; REFACTOR)
-<span class="nc" id="L27">    }</span>
+<span class="fc bfc" id="L25" title="All 4 branches covered.">        if (pins &lt; 0 || pins &gt; 10) {</span>
+<span class="fc" id="L26">            throw new IllegalArgumentException(&quot;Invalid pins&quot;);</span>
+        }
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (this.isComplete()) {</span>
+<span class="fc" id="L29">            throw new IllegalStateException(&quot;Game is already complete&quot;);</span>
+        }
+
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (frames.size() &lt; 9) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (currentFrameObj == null) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                if (pins == 10) {</span>
+<span class="fc" id="L35">                    Frame f = new Frame(FrameType.STRIKE);</span>
+<span class="fc" id="L36">                    f.setFirstShot(10);</span>
+<span class="fc" id="L37">                    f.setSecondShot(0);</span>
+<span class="fc" id="L38">                    frames.add(f);</span>
+<span class="fc" id="L39">                } else {</span>
+<span class="fc" id="L40">                    currentFrameObj = new Frame(FrameType.NORMAL);</span>
+<span class="fc" id="L41">                    currentFrameObj.setFirstShot(pins);</span>
+                }
+            } else {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (currentFrameObj.getFirstShot() + pins &gt; 10) {</span>
+<span class="fc" id="L45">                    throw new IllegalArgumentException(&quot;Two shots sum more than 10&quot;);</span>
+                }
+                Frame f;
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (currentFrameObj.getFirstShot() + pins == 10) {</span>
+<span class="fc" id="L49">                    f = new Frame(FrameType.SPARE);</span>
+                } else {
+<span class="fc" id="L51">                    f = new Frame(FrameType.NORMAL);</span>
+                }
+<span class="fc" id="L53">                f.setFirstShot(currentFrameObj.getFirstShot());</span>
+<span class="fc" id="L54">                f.setSecondShot(pins);</span>
+<span class="fc" id="L55">                frames.add(f);</span>
+<span class="fc" id="L56">                currentFrameObj = null;</span>
+<span class="fc" id="L57">            }</span>
+        } else {
+            // 10th frame logic
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (frames.size() == 9) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">                if (currentFrameObj == null) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                    if (pins == 10) {</span>
+<span class="fc" id="L63">                        Frame f = new Frame(FrameType.STRIKE);</span>
+<span class="fc" id="L64">                        f.setFirstShot(10);</span>
+<span class="fc" id="L65">                        frames.add(f);</span>
+<span class="fc" id="L66">                        currentFrameObj = f;</span>
+<span class="fc" id="L67">                    } else {</span>
+<span class="fc" id="L68">                        currentFrameObj = new Frame(FrameType.NORMAL);</span>
+<span class="fc" id="L69">                        currentFrameObj.setFirstShot(pins);</span>
+                    }
+                } else {
+<span class="pc bpc" id="L72" title="3 of 4 branches missed.">                    if (currentFrameObj.getFirstShot() + pins &gt; 10 &amp;&amp; currentFrameObj.getFirstShot() &lt; 10) {</span>
+<span class="nc" id="L73">                        throw new IllegalArgumentException(&quot;Two shots sum more than 10&quot;);</span>
+                    }
+                    Frame f;
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                    if (currentFrameObj.getFirstShot() + pins == 10) {</span>
+<span class="fc" id="L77">                        f = new Frame(FrameType.SPARE);</span>
+                    } else {
+<span class="fc" id="L79">                        f = new Frame(FrameType.NORMAL);</span>
+                    }
+<span class="fc" id="L81">                    f.setFirstShot(currentFrameObj.getFirstShot());</span>
+<span class="fc" id="L82">                    f.setSecondShot(pins);</span>
+<span class="fc" id="L83">                    frames.add(f);</span>
+<span class="fc" id="L84">                    currentFrameObj = f;</span>
+<span class="fc" id="L85">                }</span>
+            } else { // Bonus shots
+<span class="fc" id="L87">                Frame f = frames.get(9);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                if (f.getType() == FrameType.STRIKE) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                    if (f.getSecondShot() == -1) {</span>
+<span class="fc" id="L90">                        f.setSecondShot(pins);</span>
+                    } else {
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">                        if (f.getSecondShot() &lt; 10 &amp;&amp; f.getSecondShot() + pins &gt; 10) {</span>
+<span class="nc" id="L93">                            throw new IllegalArgumentException(&quot;Two shots sum more than 10&quot;);</span>
+                        }
+<span class="fc" id="L95">                        f.setThirdShot(pins);</span>
+                    }
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">                } else if (f.getType() == FrameType.SPARE) {</span>
+<span class="fc" id="L98">                    f.setThirdShot(pins);</span>
+                }
+            }
+        }
+<span class="fc" id="L102">    }</span>
 
     /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
     public int score() {
-        // TODO: implementar con TDD
-<span class="nc" id="L32">        return 0;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (!isComplete()) {</span>
+<span class="fc" id="L107">            throw new IllegalStateException(&quot;Game is not complete&quot;);</span>
+        }
+<span class="fc" id="L109">        return new BowlingScorer().calculate(this.frames);</span>
     }
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        // TODO: implementar con TDD
-<span class="nc" id="L38">        return false;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (frames.size() &lt; 10)</span>
+<span class="fc" id="L115">            return false;</span>
+<span class="fc" id="L116">        Frame f = frames.get(9);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (f.getType() == FrameType.NORMAL) {</span>
+<span class="fc" id="L118">            return true;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        } else if (f.getType() == FrameType.STRIKE) {</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">            return f.getSecondShot() != -1 &amp;&amp; f.getThirdShot() != -1;</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        } else if (f.getType() == FrameType.SPARE) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            return f.getThirdShot() != -1;</span>
+        }
+<span class="nc" id="L124">        return false;</span>
     }
 
     public List&lt;Frame&gt; getFrames() {
-<span class="nc" id="L42">        return List.copyOf(frames);</span>
+<span class="fc" id="L128">        return List.copyOf(frames);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

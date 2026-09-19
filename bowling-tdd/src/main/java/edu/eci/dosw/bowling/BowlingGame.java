@@ -10,15 +10,10 @@ import java.util.List;
 public class BowlingGame {
 
     private final List<Frame> frames;
-    private int currentRollInFrame;
-    private int firstShotPins;
-    private int currentFrame;
+    private Frame currentFrameObj;
 
     public BowlingGame() {
         this.frames = new ArrayList<>();
-        this.currentRollInFrame = 1;
-        this.firstShotPins = 0;
-        this.currentFrame = 0;
     }
 
     /**
@@ -27,58 +22,106 @@ public class BowlingGame {
      * Lanza IllegalStateException si el juego ya termino.
      */
     public void roll(int pins) {
-
-        if (pins < 0) {
-            throw new IllegalArgumentException("Pines must be positive");
-        }
-        if (pins > 10) {
-            throw new IllegalArgumentException("Pines must be less than or equal to 10");
+        if (pins < 0 || pins > 10) {
+            throw new IllegalArgumentException("Invalid pins");
         }
         if (this.isComplete()) {
             throw new IllegalStateException("Game is already complete");
         }
 
-        if (currentRollInFrame == 1) {
-            if (pins == 10) {
-                Frame frame = new Frame(FrameType.STRIKE);
-                frame.setFirstShot(10);
-                frame.setSecondShot(0);
-                this.frames.add(frame);
+        if (frames.size() < 9) {
+            if (currentFrameObj == null) {
+                if (pins == 10) {
+                    Frame f = new Frame(FrameType.STRIKE);
+                    f.setFirstShot(10);
+                    f.setSecondShot(0);
+                    frames.add(f);
+                } else {
+                    currentFrameObj = new Frame(FrameType.NORMAL);
+                    currentFrameObj.setFirstShot(pins);
+                }
             } else {
-                this.firstShotPins = pins;
-                this.currentRollInFrame = 2;
+                if (currentFrameObj.getFirstShot() + pins > 10) {
+                    throw new IllegalArgumentException("Two shots sum more than 10");
+                }
+                Frame f;
+                if (currentFrameObj.getFirstShot() + pins == 10) {
+                    f = new Frame(FrameType.SPARE);
+                } else {
+                    f = new Frame(FrameType.NORMAL);
+                }
+                f.setFirstShot(currentFrameObj.getFirstShot());
+                f.setSecondShot(pins);
+                frames.add(f);
+                currentFrameObj = null;
             }
         } else {
-            if (this.firstShotPins + pins > 10) {
-                throw new IllegalArgumentException("Two shots sum more than 10");
+            // 10th frame logic
+            if (frames.size() == 9) {
+                if (currentFrameObj == null) {
+                    if (pins == 10) {
+                        Frame f = new Frame(FrameType.STRIKE);
+                        f.setFirstShot(10);
+                        frames.add(f);
+                        currentFrameObj = f;
+                    } else {
+                        currentFrameObj = new Frame(FrameType.NORMAL);
+                        currentFrameObj.setFirstShot(pins);
+                    }
+                } else {
+                    if (currentFrameObj.getFirstShot() + pins > 10 && currentFrameObj.getFirstShot() < 10) {
+                        throw new IllegalArgumentException("Two shots sum more than 10");
+                    }
+                    Frame f;
+                    if (currentFrameObj.getFirstShot() + pins == 10) {
+                        f = new Frame(FrameType.SPARE);
+                    } else {
+                        f = new Frame(FrameType.NORMAL);
+                    }
+                    f.setFirstShot(currentFrameObj.getFirstShot());
+                    f.setSecondShot(pins);
+                    frames.add(f);
+                    currentFrameObj = f;
+                }
+            } else { // Bonus shots
+                Frame f = frames.get(9);
+                if (f.getType() == FrameType.STRIKE) {
+                    if (f.getSecondShot() == -1) {
+                        f.setSecondShot(pins);
+                    } else {
+                        if (f.getSecondShot() < 10 && f.getSecondShot() + pins > 10) {
+                            throw new IllegalArgumentException("Two shots sum more than 10");
+                        }
+                        f.setThirdShot(pins);
+                    }
+                } else if (f.getType() == FrameType.SPARE) {
+                    f.setThirdShot(pins);
+                }
             }
-
-            Frame frame;
-            if (this.firstShotPins + pins == 10) {
-                frame = new Frame(FrameType.SPARE);
-            } else {
-                frame = new Frame(FrameType.NORMAL);
-            }
-            frame.setFirstShot(this.firstShotPins);
-            frame.setSecondShot(pins);
-            this.frames.add(frame);
-
-            this.currentRollInFrame = 1;
-            this.firstShotPins = 0;
-            this.currentFrame += 1;
         }
-
     }
 
     /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
     public int score() {
-        // TODO: implementar con TDD
-        return 0;
+        if (!isComplete()) {
+            throw new IllegalStateException("Game is not complete");
+        }
+        return new BowlingScorer().calculate(this.frames);
     }
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        return this.frames.size() == 10;
+        if (frames.size() < 10)
+            return false;
+        Frame f = frames.get(9);
+        if (f.getType() == FrameType.NORMAL) {
+            return true;
+        } else if (f.getType() == FrameType.STRIKE) {
+            return f.getSecondShot() != -1 && f.getThirdShot() != -1;
+        } else if (f.getType() == FrameType.SPARE) {
+            return f.getThirdShot() != -1;
+        }
+        return false;
     }
 
     public List<Frame> getFrames() {

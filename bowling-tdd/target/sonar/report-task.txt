@@ -1,0 +1,6 @@
+projectKey=bowling-tdd
+serverUrl=http://localhost:9000
+serverVersion=26.9.0.129388
+dashboardUrl=http://localhost:9000/dashboard?id=bowling-tdd
+ceTaskId=2fc24264-d3f1-49fa-ad99-7bf923c890de
+ceTaskUrl=http://localhost:9000/api/ce/task?id=2fc24264-d3f1-49fa-ad99-7bf923c890de
