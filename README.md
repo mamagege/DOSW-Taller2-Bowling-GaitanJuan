@@ -48,17 +48,17 @@ Implementa las siguientes reglas principales:
 ### COBERTURA
 El analisis estatico demostro que la cobertura del codigo cumple con los estandares definidos en el Quality Gate.
 
-![Evidencia Sonarqube Cobertura](images/sonarqubeOverview.png)
+![Evidencia Sonarqube Cobertura](bowling-tdd/docs/images/sonarqubeOverview.png)
 
 ### ISSUES
 Se resolvieron los diferentes Code Smells e Issues de mantenibilidad reportados por la herramienta para mejorar la calidad del software.
 
-![Evidencia Sonarqube Issues](images/sonarqubeIssues.png)
+![Evidencia Sonarqube Issues](bowling-tdd/docs/images/sonarqubeIssues.png)
 
 ### QUALITY GATE
 El Quality Gate paso exitosamente, garantizando que el proyecto esta listo bajo estandares de calidad limpios y mantenibles.
 
-![Evidencia Sonarqube Quality Gate](images/sonarqubeGate.png)
+![Evidencia Sonarqube Quality Gate](bowling-tdd/docs/images/sonarqubeGate.png)
 
 ## PREGUNTAS
 
