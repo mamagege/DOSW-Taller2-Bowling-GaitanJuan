@@ -24,38 +24,41 @@ Implementa las siguientes reglas principales:
 ### ROJO (Prueba Fallida)
 
 
-![Evidencia Rojo](../bowling-tdd/docs/images/tdd_rojo.png)
+![Evidencia Rojo](bowling-tdd/docs/images/rojo.png)
 
 ### VERDE (Prueba Exitosa)
 
 
-![Evidencia Verde](../bowling-tdd/docs/images/tdd_verde.png)
+![Evidencia Verde](bowling-tdd/docs/images/verde.png)
 
 ### REFACTORIZACION (Mejora del Codigo)
 
 
-![Evidencia Refactor](../bowling-tdd/docs/images/tdd_refactor.png)
+![Evidencia Refactor](bowling-tdd/docs/images/azul.png)
 
 ## JACOCO EVIDENCIA
 
-![Evidencia Jacoco](../bowling-tdd/docs/images/jacoco_report.png)
+![Evidencia Jacoco](bowling-tdd/docs/images/jacoco1.png)
+
+
+![Evidencia Jacoco](bowling-tdd/docs/images/jacocohtml.png)
 
 ## SONARQUBE
 
 ### COBERTURA
 El analisis estatico demostro que la cobertura del codigo cumple con los estandares definidos en el Quality Gate.
 
-![Evidencia Sonarqube Cobertura](images/sonar_cobertura.png)
+![Evidencia Sonarqube Cobertura](images/sonarqubeOverview.png)
 
 ### ISSUES
 Se resolvieron los diferentes Code Smells e Issues de mantenibilidad reportados por la herramienta para mejorar la calidad del software.
 
-![Evidencia Sonarqube Issues](images/sonar_issues.png)
+![Evidencia Sonarqube Issues](images/sonarqubeIssues.png)
 
 ### QUALITY GATE
 El Quality Gate paso exitosamente, garantizando que el proyecto esta listo bajo estandares de calidad limpios y mantenibles.
 
-![Evidencia Sonarqube Quality Gate](images/sonar_quality_gate.png)
+![Evidencia Sonarqube Quality Gate](images/sonarqubeGate.png)
 
 ## PREGUNTAS
 
