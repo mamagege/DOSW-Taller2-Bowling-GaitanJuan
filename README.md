@@ -24,21 +24,21 @@ Implementa las siguientes reglas principales:
 ### ROJO (Prueba Fallida)
 
 
-![Evidencia Rojo](images/tdd_rojo.png)
+![Evidencia Rojo](bowling-tdd/docs/images/tdd_rojo.png)
 
 ### VERDE (Prueba Exitosa)
 
 
-![Evidencia Verde](images/tdd_verde.png)
+![Evidencia Verde](bowling-tdd/docs/images/tdd_verde.png)
 
 ### REFACTORIZACION (Mejora del Codigo)
 
 
-![Evidencia Refactor](images/tdd_refactor.png)
+![Evidencia Refactor](bowling-tdd/docs/images/tdd_refactor.png)
 
 ## JACOCO EVIDENCIA
 
-![Evidencia Jacoco](images/jacoco_report.png)
+![Evidencia Jacoco](bowling-tdd/docs/images/jacoco_report.png)
 
 ## SONARQUBE
 
